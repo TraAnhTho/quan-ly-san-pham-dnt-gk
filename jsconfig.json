@@ -1,0 +1,12 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "types": ["react", "expo/types"]
+  },
+  "include": ["src/**/*.js"],
+  "exclude": ["node_modules", "dist", "dist-android"]
+}

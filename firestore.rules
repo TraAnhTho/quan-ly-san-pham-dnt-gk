@@ -1,0 +1,24 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function permitted() {
+      // Điền UID tài khoản được phép lấy từ Authentication > Users, ví dụ ['UID_CUA_BAN'].
+      // Mặc định danh sách rỗng: từ chối mọi tài khoản, không coi ai đăng nhập cũng là admin.
+      return request.auth != null && request.auth.uid in ['UE1gqM4ee6giZD0EVlp2ulIlETu2'];    
+    }
+    function validProduct(data) {
+      return data.keys().hasAll(['name', 'price', 'soluong', 'image'])
+        && data.keys().hasOnly(['name', 'price', 'soluong', 'image'])
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 120
+        && data.price is number && data.price >= 0 && data.price <= 9007199254740991
+        && data.soluong is int && data.soluong >= 0 && data.soluong <= 9007199254740991
+        && data.image is string && data.image.size() <= 700000
+        && (data.image == '' || data.image.matches('https://.*')
+          || data.image.matches('data:image/(jpeg|png|webp|gif);base64,.*'));
+    }
+    match /products/{productId} {
+      allow read, delete: if permitted();
+      allow create, update: if permitted() && validProduct(request.resource.data);
+    }
+  }
+}

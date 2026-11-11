@@ -1,0 +1,14 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function permitted() {
+      // Điền cùng danh sách UID được cấp quyền trong firestore.rules.
+      return request.auth != null && request.auth.uid in [];
+    }
+    match /product-images/{filename} {
+      allow read, delete: if permitted();
+      allow create, update: if permitted() && request.resource.size <= 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp|gif)');
+    }
+  }
+}

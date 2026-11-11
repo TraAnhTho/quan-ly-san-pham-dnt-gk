@@ -2,23 +2,37 @@
   "expo": {
     "name": "quan-ly-san-pham",
     "slug": "quan-ly-san-pham",
-    "version": "1.0.0",
-    "orientation": "portrait",
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "android": {
+      "adaptiveIcon": {
+        "monochromeImage": "./assets/android-icon-monochrome.png",
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png"
+      }
+    },
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "scheme": "quan-ly-san-pham",
+    "userInterfaceStyle": "light",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": false,
+          "photosPermission": "Cho phép chọn hình ảnh sản phẩm từ thư viện.",
+          "microphonePermission": false
+        }
+      ]
+    ]
   }
 }
